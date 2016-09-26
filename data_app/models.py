@@ -1,12 +1,20 @@
 from django.db import models
+from django.utils.timezone import now
+
+class TestingFields(models.Model):
+    #signup_date = models.DateTimeField(auto_now_add=True) # saves the data/time into the field when the object is saved to the db
+    #state = models.CharField(max_length=2) # I'm unsure why I can add more than 2 chars
+    #zip = models.PositiveSmallIntegerField()
+    #phone = models.PositiveIntegerField(blank=True) # I'm unsure why this makes me put in data
+    rating
 
 class Customers(models.Model):
-    # signup_date
-    human_first_name = models.CharField(max_length=200)
-    human_last_name = models.CharField(max_length=200)
-    pet_name = models.CharField(max_length=200)
+    signup_date = models.DateTimeField(auto_now_add=True)
+    human_first_name = models.CharField(max_length=50)
+    human_last_name = models.CharField(max_length=100)
+    #pet_name = models.CharField(max_length=200) This is another table
     street_address = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
+    city = models.CharField(max_length=50)
     state = models.CharField(max_length=2)
     zip = models.PositiveSmallIntegerField()
     primary_phone = models.PositiveIntegerField()
@@ -23,6 +31,15 @@ class Customers(models.Model):
     # contract_on_file
     # left_rating
     # allows_pics
+
+class Services(models.Model):
+    pass
+
+class Pets(models.Model):
+    pass
+
+class Orders(models.Model):
+    pass
 
 def populate_db():
     a = Customers(human_first_name='Brad', human_last_name='Long', pet_name='Benji', street_address='1 North Rd.',
