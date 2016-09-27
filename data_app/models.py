@@ -20,7 +20,7 @@ class Customers(models.Model):
     street_address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     state = USStateField()
-    zip = USZipCodeField()
+    zip_code = USZipCodeField()
     primary_phone = PhoneNumberField()
     secondary_phone = PhoneNumberField()
     email = models.EmailField()
