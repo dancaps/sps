@@ -12,7 +12,7 @@ class TestingFields(models.Model):
     pass
 
 
-class Customers(models.Model):
+class Customer(models.Model):
     signup_date = models.DateTimeField(auto_now_add=True)
     human_first_name = models.CharField(max_length=200)
     human_last_name = models.CharField(max_length=200)
@@ -35,22 +35,22 @@ class Customers(models.Model):
     def __unicode__(self):
         return 'Customer : {}'.format(self.human_first_name)
 
-class Services(models.Model):
+class Service(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     def __unicode__(self):
         return 'Service : {}, Costs : ${}'.format(self.name, self.price)
 
-class Pets(models.Model):
+class Pet(models.Model):
     name = models.CharField(max_length=200, default='Katie')
-    customer = models.ForeignKey(Customers, default=1)
+    customer = models.ForeignKey(Customer, default=1)
 
     def __unicode__(self):
         return 'Pet Name : {} belongs to : {} {}'.format(self.name, self.customer.human_first_name,
                                                          self.customer.human_last_name)
 
-class Orders(models.Model):
+class Order(models.Model):
     pass
 
 def populate_db():
