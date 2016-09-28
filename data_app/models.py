@@ -31,46 +31,77 @@ class Customer(models.Model):
     contract_on_file = models.BooleanField()
     left_rating = models.BooleanField()
     allows_pics = models.BooleanField()
+    mileage = models.IntegerField()
+    notes = models.TextField(null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Customer : {}'.format(self.human_first_name)
 
 class Service(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Service : {}, Costs : ${}'.format(self.name, self.price)
 
 class Pet(models.Model):
     name = models.CharField(max_length=200, default='Katie')
     customer = models.ForeignKey(Customer, default=1)
+    animal_type = models.CharField(max_length=200, default=None)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Pet Name : {} belongs to : {} {}'.format(self.name, self.customer.human_first_name,
                                                          self.customer.human_last_name)
 
 class Order(models.Model):
+    order_date = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(Customer, default=1)
+    start_date = models.DateTimeField(auto_now_add=False)
+    end_date = models.DateTimeField(auto_now_add=False)
+    num_visits = models.IntegerField()
+
+    def __str__(self):
+        return 'Pet Name : {} belongs to : {} {}'.format(self.name, self.customer.human_first_name,
+                                                         self.customer.human_last_name)
+class OrderServices(models.Model):
+    #order =
     pass
 
 def populate_db():
-    a = Customers(human_first_name='Brad', human_last_name='Long', street_address='1 North Rd.',
-                  city='Superior', state='CO', zip=12345, primary_phone=9234567890, secondary_phone=5126941175,
+    a = Customer(human_first_name='Brad', human_last_name='Long', street_address='1 North Rd.',
+                  city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                   email='danny.caperton@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                   emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
                   left_rating=False, allows_pics=True)
     a.save()
-    b = Customers(human_first_name='Mike', human_last_name='Long', street_address='1 North Rd.',
-                  city='Superior', state='CO', zip=12345, primary_phone=9234567890, secondary_phone=5126941175,
+    b = Customer(human_first_name='Mike', human_last_name='Long', street_address='1 North Rd.',
+                  city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                   email='danny.caperton@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                   emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
                   left_rating=False, allows_pics=True)
     b.save()
-    c = Customers(human_first_name='Sarah', human_last_name='Long', street_address='1 North Rd.',
-                  city='Superior', state='CO', zip=12345, primary_phone=9234567890, secondary_phone=5126941175,
+    c = Customer(human_first_name='Sarah', human_last_name='Long', street_address='1 North Rd.',
+                  city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                   email='danny.caperton@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                   emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
                   left_rating=False, allows_pics=True)
     c.save()
+    d = Pet(name='Fido', customer=a)
+    d.save()
+    d = Pet(name='Benji', customer=a)
+    d.save()
+    d = Pet(name='Cat', customer=a)
+    d.save()
+    d = Pet(name='Fido', customer=b)
+    d.save()
+    d = Pet(name='Bubbles', customer=b)
+    d.save()
+    d = Pet(name='Piggy', customer=b)
+    d.save()
+    d = Pet(name='Fishy', customer=c)
+    d.save()
+    d = Pet(name='Patches', customer=c)
+    d.save()
+
 
 
