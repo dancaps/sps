@@ -4,14 +4,14 @@ from localflavor.us.models import PhoneNumberField, USStateField, USZipCodeField
 
 class Customer(models.Model):
     signup_date = models.DateTimeField(auto_now_add=True)
-    human_first_name = models.CharField(max_length=200)
-    human_last_name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     street_address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     state = USStateField()
     zip_code = USZipCodeField()
     primary_phone = PhoneNumberField()
-    secondary_phone = PhoneNumberField()
+    secondary_phone = PhoneNumberField(blank=True, null=True)
     email = models.EmailField()
     vet_name = models.CharField(max_length=200)
     vet_phone = PhoneNumberField()
@@ -24,8 +24,7 @@ class Customer(models.Model):
     notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return '{} {}, {}, {}, {}'.format(self.human_first_name, self.human_last_name, self.primary_phone, self.email,
-                                          self.notes)
+        return '{} {}, {}, {}'.format(self.first_name, self.last_name, self.primary_phone, self.email)
 
 class Pet(models.Model):
     name = models.CharField(max_length=200)
@@ -33,51 +32,49 @@ class Pet(models.Model):
     animal_type = models.CharField(max_length=200)
 
     def __str__(self):
-        return '{} is a {} that belongs to {} {}'.format(self.name, self.animal_type, self.customer.human_first_name,
-                                                         self.customer.human_last_name)
+        return 'Pet Name: {} - {} - Owner: {} {}'.format(self.name, self.animal_type, self.customer.first_name,
+                                                         self.customer.last_name)
 class Service(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     def __str__(self):
-        return 'Service = {}, Costs = ${}'.format(self.name, self.price)
+        return 'Service: {} - Price: ${}'.format(self.name, self.price)
 
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
-    start_date = models.DateTimeField(auto_now_add=False)
-    customer = models.ForeignKey(Customer)
-    end_date = models.DateTimeField(auto_now_add=False)
-    num_visits = models.IntegerField()
-    mileage = models.IntegerField() #can I populate this with customer mileage * num_visits
-    #amount_due = models.DecimalField(max_digits=10, decimal_places=2) #can I populate this services.price
+    customer = models.ForeignKey(Customer, null=True)
+    start_date = models.DateField(auto_now=False)
+    end_date = models.DateField(auto_now=False)
+    total_visits = models.IntegerField(null=True)
+    total_mileage = models.IntegerField(null=True) #can I populate this with customer mileage * num_visits
+    amount_due = models.DecimalField(max_digits=10, decimal_places=2, null=True) #can I populate this services.price
     pets = models.ManyToManyField(Pet)
-    services = models.ManyToManyField(Service)
+    services = models.ForeignKey(Service, null=True)
 
     def __str__(self):
-        services = '-'.join([str(service.name) for service in self.services.get_queryset()])
-        return 'Order Information: OrderID = {}, ' \
-               'Customer = {} {}, ' \
-               'Services Requested = {}, ' \
-               'Start Date = {}, ' \
-               'End Date = {}'.format(self.id, self.customer.human_first_name, self.customer.human_last_name,
-                                      services, self.start_date, self.end_date)
+        #services = '-'.join([str(service.name) for service in self.services.get_queryset()])
+        return 'OrderID = {}, ' \
+               'Customer: {} {}, ' \
+               'Start Date: {}, ' \
+               'End Date: {}'.format(self.id, self.customer.first_name, self.customer.last_name, self.start_date, self.end_date)
 
 def populate_db(cust=3):
         count = 0
         while count < cust:
-            a = Customer(human_first_name='Brad', human_last_name='Long', street_address='1 North Rd.',
+            a = Customer(first_name='Brad', last_name='Long', street_address='1 North Rd.',
                           city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                           email='danny.caperton@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                           emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
                           left_rating=False, allows_pics=True, mileage=10)
             a.save()
-            b = Customer(human_first_name='Mike', human_last_name='Long', street_address='1 North Rd.',
+            b = Customer(first_name='Mike', last_name='Long', street_address='1 North Rd.',
                           city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                           email='mike@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                           emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
                           left_rating=False, allows_pics=True, mileage=7)
             b.save()
-            c = Customer(human_first_name='Sarah', human_last_name='Long', street_address='1 North Rd.',
+            c = Customer(first_name='Sarah', last_name='Long', street_address='1 North Rd.',
                           city='Superior', state='CO', zip_code=12345, primary_phone=9234567890, secondary_phone=5126941175,
                           email='sarah@gmail.com', vet_name='Billy Vetman', vet_phone=6549871321,
                           emergency_contact_name='Helen Keller', emergency_contact_phone=6549873215, contract_on_file=True,
@@ -105,9 +102,10 @@ def populate_db(cust=3):
         l.save()
         m = Service(name='Overnight', price=65.00)
         m.save()
-        n = Order(start_date='2017-01-01 12:00:01', customer=a, end_date='2017-02-01 12:00:01', num_visits=5, mileage=25)
+        n = Order(start_date='2017-01-01', customer=a, end_date='2017-02-01', total_visits=5, total_mileage=25,
+                  services=k, amount_due=100.00)
         n.save()
-        n.services.add(k)
-        n.save()
+        # n.services.add(k)
+        # n.save()
         n.pets.add(d)
         n.save()
