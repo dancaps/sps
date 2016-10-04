@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-#from data_app import urls as data_app_url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('data_app.urls')),
+    url(r'^pet_sitting/', include('pet_sitting.urls')),
 ]

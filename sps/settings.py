@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'data_app',
+    'pet_sitting',
     'localflavor',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'data_app', 'templates',)
+            os.path.join(BASE_DIR, 'pet_sitting', 'templates',)
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -121,4 +121,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/pet_sitting/static/'

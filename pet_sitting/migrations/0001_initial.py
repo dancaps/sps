@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('total_mileage', models.IntegerField(blank=True, null=True)),
                 ('amount_due', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
                 ('paid', models.BooleanField(default=False)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='data_app.Customer')),
+                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pet_sitting.Customer')),
             ],
         ),
         migrations.CreateModel(
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('animal_type', models.CharField(max_length=200)),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='data_app.Customer')),
+                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pet_sitting.Customer')),
             ],
         ),
         migrations.CreateModel(
@@ -74,11 +74,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='pets',
-            field=models.ManyToManyField(to='data_app.Pet'),
+            field=models.ManyToManyField(to='pet_sitting.Pet'),
         ),
         migrations.AddField(
             model_name='order',
             name='services',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='data_app.Service'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='pet_sitting.Service'),
         ),
     ]

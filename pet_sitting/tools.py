@@ -1,4 +1,4 @@
-from data_app.models import *
+from pet_sitting.models import *
 
 def populate_db(cust=3):
     count = 0
