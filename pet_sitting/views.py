@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import auth
+from pet_sitting.models import Customer, Pet, Order, Service
 
 from pet_sitting.forms import CustomerForm, PetForm
 
@@ -15,7 +16,7 @@ def add_customer(request):
             customer_form.save()
     else:
         customer_form = CustomerForm()
-    context = {'customer_form': customer_form}
+    context = {'customer_form': customer_form, }
     return render(request, 'add_customer.html', context)
 
 def add_pet(request):
@@ -25,6 +26,23 @@ def add_pet(request):
             pet_form.save()
     else:
         pet_form = PetForm()
-    context = {'pet_form': pet_form}
+    context = {'pet_form': pet_form, }
     return render(request, 'add_pet.html', context)
 
+def get_customers(request):
+    return render(request, 'all_ids.html', {'ids' : Customer.objects.all(), 'url' : 'customer',
+                                            'heading' : 'View All Customers', })
+
+def get_customer(request, customer_id=1):
+    context = {'id': Customer.objects.get(id=customer_id), 'url': 'customer',
+               'heading': 'Edit Customer: ' + Customer.objects.get(id=customer_id).first_name +
+                          ' ' + Customer.objects.get(id=customer_id).last_name, }
+    return render(request, 'id.html', context)
+
+def get_pets(request):
+    return render(request, 'all_ids.html', {'ids': Pet.objects.all(), 'url' : 'pet', 'heading': 'All Pets', })
+
+def get_pet(request, pet_id=1):
+    context = {'id': Pet.objects.get(id=pet_id), 'url' : 'pet',
+               'heading': 'Edit Pet: ' + Pet.objects.get(id=pet_id).name, }
+    return render(request, 'id.html', context)

@@ -2,21 +2,25 @@
 
 {% block title %}Superior Pet Services{% endblock %}
 
-{% block projectname %}<a class="navbar-brand" href="/pet_sitting/">Superior Pet Services Operational Dashboard</a>{% endblock %}
+{% block projectname %}<a class="navbar-brand" href="/pet_sitting/dashboard/">Superior Pet Services Operational Dashboard</a>{% endblock %}
 
-
+{% block dashboard %}<a href="/pet_sitting/dashboard/">Dashboard</a>{% endblock %}
 {% block admin %}<a href="/admin/">Admin</a>{% endblock %}
+{% block website %}<a href="http://www.superiorpetservices.com/">Website</a>{% endblock %}
+{% block profile %}{% endblock %}
 
 {% block sidebar1 %}<a href="/pet_sitting/add_customer/">Add a New Customer</a>{% endblock %}
 {% block sidebar2 %}<a href="/pet_sitting/add_pet/">Add a New Pet</a>{% endblock %}
-{% block sidebar3 %}{% endblock %}
-{% block sidebar4 %}{% endblock %}
+{% block sidebar3 %}<a href="/pet_sitting/create_order/">Create an Order</a>{% endblock %}
+{% block sidebar4 %}<a href="/pet_sitting/create_service/">Create a New Service</a>{% endblock %}
 {% block sidebar5 %}{% endblock %}
-{% block sidebar6 %}<a href="/pet_sitting/create_order/">Create an Order</a>{% endblock %}
-{% block sidebar7 %}<a href="/pet_sitting/create_service/">Create a New Service</a>{% endblock %}
+
+{% block sidebar6 %}<a href="/pet_sitting/customer/all/">View All Customers</a>{% endblock %}
+{% block sidebar7 %}<a href="/pet_sitting/pet/all/">View All Pets</a>{% endblock %}
 {% block sidebar8 %}{% endblock %}
 
 {% comment %}
 {% block page_heading %}<h1 class="page-header">Dashboard</h1>{% endblock %}
 {% block page %}This is the page content{% endblock %}
 {% endcomment %}
+
