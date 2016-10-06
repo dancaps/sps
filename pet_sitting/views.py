@@ -9,14 +9,20 @@ def dashboard(request):
     context = {'html': 'THIS IS MY NEW CODE!'}
     return render(request, 'menu_sidebar.html')
 
-def add_customer(request):
+def add_customer(request, customer_id=0):
+    heading = 'Add New Customer'
     if request.method == 'POST':
         customer_form = CustomerForm(request.POST)
         if customer_form.is_valid():
             customer_form.save()
     else:
-        customer_form = CustomerForm()
-    context = {'customer_form': customer_form, }
+        if customer_id == 0:
+            customer_form = CustomerForm()
+        else:
+            customer_obj = Customer.objects.get(id=customer_id).__dict__
+            customer_form = CustomerForm(initial=customer_obj)
+            heading = 'Edit Customer: ' + customer_obj['first_name'] + ' ' +customer_obj['last_name']
+    context = {'customer_form': customer_form, 'heading' : heading}
     return render(request, 'add_customer.html', context)
 
 def add_pet(request):
