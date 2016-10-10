@@ -25,7 +25,7 @@ SECRET_KEY = 'gv=)&*ja440hq=v8=z0s0vvby_yin&wng7##^zy!d0m&es80$n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1:8000',]
 
 
 # Application definition
@@ -57,7 +57,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'pet_sitting', 'templates',)
+            os.path.join(BASE_DIR, 'pet_sitting', 'templates',),
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -122,3 +123,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/pet_sitting/static/'
+
+LOGIN_REDIRECT_URL = '/pet_sitting/dashboard/'

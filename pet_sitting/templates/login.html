@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Superior Pet Services{% endblock %}
+
+{% block projectname %}<a class="navbar-brand" href="#">Superior Pet Services Operational Dashboard</a>{% endblock %}
+
+{% block page_heading %}<h1 class="page-header">Login Page</h1>{% endblock %}
+
+{% block dashboard %}{% endblock %}
+{% block admin %}<a href="/admin/">Admin</a>{% endblock %}
+{% block website %}<a href="http://www.superiorpetservices.com/">Website</a>{% endblock %}
+{% block profile %}{% endblock %}
+
+{% block sidebar_top1 %}{% endblock %}
+{% block sidebar_top2 %}{% endblock %}
+{% block sidebar_top3 %}{% endblock %}
+{% block sidebar_top4 %}{% endblock %}
+
+{% block sidebar1 %}{% endblock %}
+{% block sidebar2 %}{% endblock %}
+{% block sidebar3 %}{% endblock %}
+{% block sidebar4 %}{% endblock %}
+{% block sidebar5 %}{% endblock %}
+
+{% block sidebar6 %}{% endblock %}
+{% block sidebar7 %}{% endblock %}
+{% block sidebar8 %}{% endblock %}
+{% block sidebar9 %}{% endblock %}
+
+
+{% block page %}
+    <h2>Login</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+{% endblock %}

@@ -15,8 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
+    url(r'^$', auth_views.login, {'template_name': 'login.html'}),
     url(r'^admin/', admin.site.urls),
+
+    # pet_sitting urls
     url(r'^pet_sitting/', include('pet_sitting.urls')),
+
+    # user authentication urls
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}),
+    # url(r'^accounts/auth/$', 'sps.views.auth_view'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/login/'}),
+    # url(r'^accounts/loggedin/$', 'sps.views.loggedin'),
+    # url(r'^accounts/invalid/$', 'sps.views.invalid_login'),
+
 ]
