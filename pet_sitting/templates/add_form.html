@@ -5,9 +5,9 @@
 {% block page %}
     <form method="post">
         <table>
-            {{ customer_form }}
+            {{ add_form }}
         </table>
         {% csrf_token %}
-        <input formaction="" type="submit" value="Submit" />
+        <input type="submit" value="Submit" />
     </form>
 {% endblock %}

@@ -61,7 +61,7 @@ class Order(models.Model):
 
     def __str__(self):
         #services = '-'.join([str(service.name) for service in self.services.get_queryset()])
-        return 'Order Number = {}, ' \
+        return 'Order Number: {}, ' \
                'Customer: {} {}, ' \
                'Start Date: {}, ' \
                'End Date: {}, ' \
