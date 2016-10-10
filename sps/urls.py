@@ -27,9 +27,6 @@ urlpatterns = [
 
     # user authentication urls
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}),
-    # url(r'^accounts/auth/$', 'sps.views.auth_view'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/login/'}),
-    # url(r'^accounts/loggedin/$', 'sps.views.loggedin'),
-    # url(r'^accounts/invalid/$', 'sps.views.invalid_login'),
 
 ]

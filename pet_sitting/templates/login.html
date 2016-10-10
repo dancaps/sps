@@ -2,7 +2,7 @@
 
 {% block title %}Superior Pet Services{% endblock %}
 
-{% block projectname %}<a class="navbar-brand" href="#">Superior Pet Services Operational Dashboard</a>{% endblock %}
+{% block projectname %}<a class="navbar-brand" href="#">Superior Pet Services Operational Portal</a>{% endblock %}
 
 {% block page_heading %}<h1 class="page-header">Login Page</h1>{% endblock %}
 
@@ -29,7 +29,6 @@
 
 
 {% block page %}
-    <h2>Login</h2>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
