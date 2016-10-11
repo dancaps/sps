@@ -15,6 +15,7 @@ class PetForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    pets = forms.ModelMultipleChoiceField(queryset=Pet.objects.all(), widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Order
         fields = '__all__'

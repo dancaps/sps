@@ -27,19 +27,25 @@ def get_customer(request, customer_id=1):
 
 @login_required(login_url='/login/')
 def add_customer(request, customer_id=0):
+    customer_id = int(customer_id)
     heading = 'Add a New Customer'
     if request.method == 'POST':
-        customer_form = CustomerForm(request.POST)
+        if customer_id > 0:
+            customer_obj = Customer.objects.get(id=customer_id)
+            customer_form = CustomerForm(request.POST, instance=customer_obj)
+        else:
+            customer_form = CustomerForm(request.POST)
         if customer_form.is_valid():
             customer_form.save()
             return HttpResponseRedirect('/pet_sitting/customer/all/')
     else:
-        if customer_id == 0:
+        if customer_id > 0:
             customer_form = CustomerForm()
         else:
-            customer_obj = Customer.objects.get(id=customer_id).__dict__
-            customer_form = CustomerForm(initial=customer_obj)
-            heading = 'Edit Customer: ' + customer_obj['first_name'] + ' ' + customer_obj['last_name']
+            customer_obj = Customer.objects.get(id=customer_id)
+            print(customer_obj)
+            customer_form = CustomerForm(instance=customer_obj)
+            heading = 'Edit Customer: ', customer_obj.first_name + ' ' + customer_obj.last_name
     context = {'add_form': customer_form, 'heading' : heading}
     return render(request, 'add_form.html', context)
 

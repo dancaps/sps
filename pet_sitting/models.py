@@ -2,11 +2,6 @@ from __future__ import unicode_literals
 from django.db import models
 from localflavor.us.models import PhoneNumberField, USStateField, USZipCodeField
 
-# Questions:
-# can I populate fields with the data from other fields? for example order mileage based on the num_visits * customer table mileage?
-# How do I make it so that my form only displays the pets that belong to the selected customer?
-# I'd like to see how through works
-
 class Customer(models.Model):
     signup_date = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=200)
@@ -30,6 +25,10 @@ class Customer(models.Model):
 
     def __str__(self):
         return '{} {}, {}, {}'.format(self.first_name, self.last_name, self.primary_phone, self.email)
+
+    @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
 class Pet(models.Model):
     name = models.CharField(max_length=200)
