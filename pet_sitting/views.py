@@ -20,32 +20,29 @@ def get_customers(request):
 @login_required(login_url='/login/')
 def get_customer(request, customer_id=1):
     context = {'id': Customer.objects.get(id=customer_id), 'url': 'customer',
-               'heading': 'Edit Customer: ' + Customer.objects.get(id=customer_id).first_name +
+               'heading': 'Customer: ' + Customer.objects.get(id=customer_id).first_name +
                           ' ' + Customer.objects.get(id=customer_id).last_name, }
     return render(request, 'id.html', context)
 
 
 @login_required(login_url='/login/')
-def add_customer(request, customer_id=0):
-    customer_id = int(customer_id)
+def add_customer(request, customer_id=None):
     heading = 'Add a New Customer'
-    if request.method == 'POST':
-        if customer_id > 0:
+    if request.method == 'POST': # POST code
+        if customer_id != None: # POST with an ID: POST EDIT CHANGES
             customer_obj = Customer.objects.get(id=customer_id)
             customer_form = CustomerForm(request.POST, instance=customer_obj)
-        else:
+        else: # POST for the first time: ADD VIEW
             customer_form = CustomerForm(request.POST)
-        if customer_form.is_valid():
+        if customer_form.is_valid(): # validate the POST and save the data
             customer_form.save()
             return HttpResponseRedirect('/pet_sitting/customer/all/')
-    else:
-        if customer_id > 0:
-            customer_form = CustomerForm()
-        else:
-            customer_obj = Customer.objects.get(id=customer_id)
-            print(customer_obj)
-            customer_form = CustomerForm(instance=customer_obj)
-            heading = 'Edit Customer: ', customer_obj.first_name + ' ' + customer_obj.last_name
+    elif customer_id == None: # GET first time code
+        customer_form = CustomerForm()
+    else: # GET entry that already exists: EDIT VIEW
+        customer_obj = Customer.objects.get(id=customer_id)
+        customer_form = CustomerForm(instance=customer_obj)
+        heading = 'Edit Customer: ' + customer_obj.full_name
     context = {'add_form': customer_form, 'heading' : heading}
     return render(request, 'add_form.html', context)
 
@@ -59,26 +56,29 @@ def get_orders(request):
 @login_required(login_url='/login/')
 def get_order(request, order_id=1):
     context = {'id': Order.objects.get(id=order_id), 'url': 'order',
-               'heading': 'Edit Order: ' + Order.objects.get(id=order_id).customer.first_name +
+               'heading': 'Order: ' + Order.objects.get(id=order_id).customer.first_name +
                           ' ' + Order.objects.get(id=order_id).customer.last_name, }
     return render(request, 'id.html', context)
 
 
 @login_required(login_url='/login/')
-def add_order(request, order_id=0):
+def add_order(request, order_id=None):
     heading = 'Add a New Order'
-    if request.method == 'POST':
-        order_form = OrderForm(request.POST)
-        if order_form.is_valid():
+    if request.method == 'POST': # POST code
+        if order_id != None: # POST with an ID: POST EDIT CHANGES
+            order_obj = Order.objects.get(id=order_id)
+            order_form = OrderForm(request.POST, instance=order_obj)
+        else: # POST for the first time: ADD VIEW
+            order_form = OrderForm(request.POST)
+        if order_form.is_valid(): # validate the POST and save the data
             order_form.save()
             return HttpResponseRedirect('/pet_sitting/order/all/')
-    else:
-        if order_id == 0:
-            order_form = OrderForm()
-        else:
-            order_obj = Order.objects.get(id=order_id).__dict__
-            order_form = OrderForm(initial=order_obj)
-            heading = 'Edit Order: ' + str(order_obj['id'])
+    elif order_id == None: # GET first time code
+        order_form = OrderForm()
+    else: # GET entry that already exists: EDIT VIEW
+        order_obj = Order.objects.get(id=order_id)
+        order_form = OrderForm(instance=order_obj)
+        heading = 'Edit Order: ' + str(order_obj.id)
     context = {'add_form': order_form, 'heading' : heading}
     return render(request, 'add_form.html', context)
 
@@ -91,25 +91,28 @@ def get_pets(request):
 @login_required(login_url='/login/')
 def get_pet(request, pet_id=1):
     context = {'id': Pet.objects.get(id=pet_id), 'url': 'pet',
-               'heading': 'Edit Pet: ' + Pet.objects.get(id=pet_id).name, }
+               'heading': 'Pet: ' + Pet.objects.get(id=pet_id).name, }
     return render(request, 'id.html', context)
 
 
 @login_required(login_url='/login/')
-def add_pet(request, pet_id=0):
+def add_pet(request, pet_id=None):
     heading = 'Add a New Pet'
     if request.method == 'POST':
-        pet_form = PetForm(request.POST)
-        if pet_form.is_valid():
+        if pet_id != None: # POST with an ID: POST EDIT CHANGES
+            pet_obj = Pet.objects.get(id=pet_id)
+            pet_form = PetForm(request.POST, instance=pet_obj)
+        else: # POST for the first time: ADD VIEW
+            pet_form = PetForm(request.POST)
+        if pet_form.is_valid(): # validate the POST and save the data
             pet_form.save()
             return HttpResponseRedirect('/pet_sitting/pet/all/')
-    else:
-        if pet_id == 0:
-            pet_form = PetForm()
-        else:
-            pet_obj = Pet.objects.get(id=pet_id).__dict__
-            pet_form = PetForm(initial=pet_obj)
-            heading = 'Edit Pet: ' + pet_obj['name']
+    elif pet_id == None: # GET first time code
+        pet_form = PetForm()
+    else: # GET entry that already exists: EDIT VIEW
+        pet_obj = Pet.objects.get(id=pet_id)
+        pet_form = PetForm(instance=pet_obj)
+        heading = 'Edit Pet: ' + pet_obj.name
     context = {'add_form': pet_form, 'heading': heading}
     return render(request, 'add_form.html', context)
 
@@ -122,24 +125,27 @@ def get_services(request):
 @login_required(login_url='/login/')
 def get_service(request, service_id=1):
     context = {'id': Service.objects.get(id=service_id), 'url': 'service',
-               'heading': 'Edit Service: ' + Service.objects.get(id=service_id).name, }
+               'heading': 'Service: ' + Service.objects.get(id=service_id).name, }
     return render(request, 'id.html', context)
 
 
 @login_required(login_url='/login/')
-def add_service(request, service_id=0):
+def add_service(request, service_id=None):
     heading = 'Add a New Service'
     if request.method == 'POST':
-        service_form = ServiceForm(request.POST)
-        if service_form.is_valid():
+        if service_id != None: # POST with an ID: POST EDIT CHANGES
+            service_obj = Service.objects.get(id=service_id)
+            service_form = ServiceForm(request.POST, instance=service_obj)
+        else: # POST for the first time: ADD VIEW
+            service_form = ServiceForm(request.POST)
+        if service_form.is_valid(): # validate the POST and save the data
             service_form.save()
             return HttpResponseRedirect('/pet_sitting/service/all/')
-    else:
-        if service_id == 0:
+    elif service_id == None: # GET first time code
             service_form = ServiceForm()
-        else:
-            service_obj = Service.objects.get(id=service_id).__dict__
-            service_form = ServiceForm(initial=service_obj)
-            heading = 'Edit Service: ' + service_obj['name']
+    else: # GET entry that already exists: EDIT VIEW
+        service_obj = Service.objects.get(id=service_id)
+        service_form = ServiceForm(instance=service_obj)
+        heading = 'Edit Service: ' + service_obj.name
     context = {'add_form': service_form, 'heading': heading}
     return render(request, 'add_form.html', context)
