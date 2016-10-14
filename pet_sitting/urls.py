@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from pet_sitting.views import dashboard, add_customer, add_pet, get_customers, \
-     get_customer, get_pets, get_pet, get_order, get_orders, add_order, get_services, get_service, add_service
+     get_customer, get_pets, get_pet, get_order, get_orders, add_order, get_services, get_service, add_service, \
+     search_results
 
 urlpatterns = [
     #url(r'^$', login),
@@ -21,4 +22,5 @@ urlpatterns = [
     url(r'^service/all/$', get_services),
     url(r'^service/get/(?P<service_id>\d+)/$', get_service),
     url(r'^service/edit/(?P<service_id>\d+)/$', add_service),
+    url(r'^search_results/$', search_results),
 ]

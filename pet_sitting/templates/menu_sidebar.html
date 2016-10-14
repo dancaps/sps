@@ -4,6 +4,12 @@
 
 {% block projectname %}<a class="navbar-brand" href="/pet_sitting/dashboard/">Superior Pet Services Operational Portal</a>{% endblock %}
 
+{% block search %}
+    {% csrf_token %}
+    <input formmethod="post" formaction="/pet_sitting/search_results/" type="text"
+           class="form-control" placeholder="Search..." name="search_query" value="{{ source.search_query }}">
+{% endblock %}
+
 {% block dashboard %}<a href="/pet_sitting/dashboard/">Dashboard</a>{% endblock %}
 {% block admin %}<a href="/admin/">Admin</a>{% endblock %}
 {% block website %}<a href="http://www.superiorpetservices.com/">Website</a>{% endblock %}

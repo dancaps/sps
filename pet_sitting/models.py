@@ -30,6 +30,29 @@ class Customer(models.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+    @staticmethod
+    def all_fields():
+        # return ['signup_date', 'first_name', 'last_name', 'street_address', 'city', 'state', 'zip_code', 'primary_phone',
+        #         'secondary_phone', 'email', 'vet_name', 'vet_phone', 'emergency_contact_name', 'emergency_contact_phone',
+        #         'contract_on_file', 'left_rating', 'allows_pics', 'mileage', 'notes', ]
+        return ['first_name', 'last_name', 'street_address', 'city', 'state', 'email', 'vet_name', 'emergency_contact_name', 'notes', ]
+
+
+        #kwargs = {i: 'danny' for i in customer_fields}
+        #Customer.objects.filter(**kwargs)
+        #maybe 2 methods 1 for int and 1 for string
+        # do a check for data type coming in from the search, then pull the proper method, build the kwargs and filter the results
+        # kwargs = {i + '__icontains': 'superior' for i in customer_fields}
+        # for k, v in kwargs.items():
+        #     args = {k: v}
+        #     l_cust.append(Customer.objects.filter(**args))
+        # results = []
+        # for i in l_cust:
+        #     if len(i) > 1:
+        #         results += i
+        # results
+
+
 class Pet(models.Model):
     name = models.CharField(max_length=200)
     customer = models.ForeignKey(Customer)

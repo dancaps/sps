@@ -149,3 +149,14 @@ def add_service(request, service_id=None):
         heading = 'Edit Service: ' + service_obj.name
     context = {'add_form': service_form, 'heading': heading}
     return render(request, 'add_form.html', context)
+
+
+@login_required(login_url='/login/')
+def search_results(request):
+    search_query = request.POST.get('search_query', '')
+    context = {'message': None, 'heading': 'Search Results: ' + search_query, 'results': None}
+    if len(search_query) == 0:
+        context['message'] = 'There were 0 results returned'
+        return render(request, 'page_content.html', context)
+    data_fields = Customer.objects.filter()
+    return  render(request, 'page_content.html', context)

@@ -1,0 +1,10 @@
+{% extends "menu_sidebar.html" %}
+
+{% block page_heading %}<h1 class="page-header"><h1>{{ heading }}</h1>{% endblock %}
+
+{% block page %}
+    <h3>{{ message }}</h3>
+    <table>
+        {{ results }}
+    </table>
+{% endblock %}
