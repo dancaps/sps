@@ -30,12 +30,6 @@ class Customer(models.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
-    # @staticmethod
-    # def string_fields():
-    #     return ['signup_date', 'first_name', 'last_name', 'street_address', 'city', 'state', 'zip_code', 'primary_phone',
-    #             'secondary_phone', 'email', 'vet_name', 'vet_phone', 'emergency_contact_name', 'emergency_contact_phone',
-    #             'contract_on_file', 'left_rating', 'allows_pics', 'mileage', 'notes', ]
-
     @staticmethod
     def customer_search(search_query):
         customers = []
@@ -62,14 +56,14 @@ class Customer(models.Model):
                     kwargs.update({k + '__icontains': search_query})
                 else:
                     continue
-
+        print(kwargs)
         for k, v in kwargs.items():
             args = {k: v}
             db_query = Customer.objects.filter(**args)
             if len(db_query) > 1:
-                customers.append(db_query)
+                customers += list(db_query)
 
-        return customers
+        return list(set(customers))
 
 
 class Pet(models.Model):
