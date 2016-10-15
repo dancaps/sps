@@ -30,27 +30,46 @@ class Customer(models.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+    # @staticmethod
+    # def string_fields():
+    #     return ['signup_date', 'first_name', 'last_name', 'street_address', 'city', 'state', 'zip_code', 'primary_phone',
+    #             'secondary_phone', 'email', 'vet_name', 'vet_phone', 'emergency_contact_name', 'emergency_contact_phone',
+    #             'contract_on_file', 'left_rating', 'allows_pics', 'mileage', 'notes', ]
+
     @staticmethod
-    def all_fields():
-        # return ['signup_date', 'first_name', 'last_name', 'street_address', 'city', 'state', 'zip_code', 'primary_phone',
-        #         'secondary_phone', 'email', 'vet_name', 'vet_phone', 'emergency_contact_name', 'emergency_contact_phone',
-        #         'contract_on_file', 'left_rating', 'allows_pics', 'mileage', 'notes', ]
-        return ['first_name', 'last_name', 'street_address', 'city', 'state', 'email', 'vet_name', 'emergency_contact_name', 'notes', ]
+    def customer_search(search_query):
+        customers = []
+        kwargs = {}
+        is_string = False
+        try:
+            search_query = int(search_query)
+        except:
+            is_string = True
 
+        fields =  {'first_name': 'string', 'last_name': 'string', 'street_address': 'string', 'city': 'string',
+                   'state': 'string', 'zip_code': 'integer', 'primary_phone': 'integer', 'secondary_phone': 'integer',
+                   'email': 'string', 'vet_name': 'string', 'vet_phone': 'integer', 'emergency_contact_name': 'string',
+                   'emergency_contact_phone': 'integer', 'mileage': 'integer', 'notes': 'string'}
 
-        #kwargs = {i: 'danny' for i in customer_fields}
-        #Customer.objects.filter(**kwargs)
-        #maybe 2 methods 1 for int and 1 for string
-        # do a check for data type coming in from the search, then pull the proper method, build the kwargs and filter the results
-        # kwargs = {i + '__icontains': 'superior' for i in customer_fields}
-        # for k, v in kwargs.items():
-        #     args = {k: v}
-        #     l_cust.append(Customer.objects.filter(**args))
-        # results = []
-        # for i in l_cust:
-        #     if len(i) > 1:
-        #         results += i
-        # results
+        for k, v in fields.items():
+            if v == 'string':
+                if is_string == True:
+                    kwargs.update({k + '__icontains': search_query})
+                else:
+                    continue
+            elif v == 'integer':
+                if is_string == False:
+                    kwargs.update({k + '__icontains': search_query})
+                else:
+                    continue
+
+        for k, v in kwargs.items():
+            args = {k: v}
+            db_query = Customer.objects.filter(**args)
+            if len(db_query) > 1:
+                customers.append(db_query)
+
+        return customers
 
 
 class Pet(models.Model):
