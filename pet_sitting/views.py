@@ -19,10 +19,17 @@ def get_customers(request):
 
 @login_required(login_url='/login/')
 def get_customer(request, customer_id=1):
-    context = {'id': Customer.objects.get(id=customer_id), 'url': 'customer',
-               'heading': 'Customer: ' + Customer.objects.get(id=customer_id).first_name +
-                          ' ' + Customer.objects.get(id=customer_id).last_name, }
-    return render(request, 'id.html', context)
+    customer_obj = Customer.objects.get(id=customer_id)
+    pet_obj = Pet.objects.filter(customer_id=customer_obj)
+    order_obj = Order.objects.filter(customer_id=customer_obj)
+    context = {'customer': customer_obj,
+               'heading': 'Customer: ' + customer_obj.full_name,
+               'pets': pet_obj,
+               'orders': order_obj,
+               'customer_heading': 'Owner',
+               'pet_heading': 'Pets',
+               'order_heading': 'Orders', }
+    return render(request, 'get_cust.html', context)
 
 
 @login_required(login_url='/login/')
@@ -55,10 +62,11 @@ def get_orders(request):
 
 @login_required(login_url='/login/')
 def get_order(request, order_id=1):
-    context = {'id': Order.objects.get(id=order_id), 'url': 'order',
-               'heading': 'Order: ' + Order.objects.get(id=order_id).customer.first_name +
-                          ' ' + Order.objects.get(id=order_id).customer.last_name, }
-    return render(request, 'id.html', context)
+    order_obj = Order.objects.get(id=order_id)
+    context = {'order': order_obj,
+               'heading': 'Order: ' + Order.objects.get(id=order_id).customer.full_name,
+               'order_heading': 'Orders', }
+    return render(request, 'get_order.html', context)
 
 
 @login_required(login_url='/login/')
@@ -90,9 +98,21 @@ def get_pets(request):
 
 @login_required(login_url='/login/')
 def get_pet(request, pet_id=1):
-    context = {'id': Pet.objects.get(id=pet_id), 'url': 'pet',
-               'heading': 'Pet: ' + Pet.objects.get(id=pet_id).name, }
-    return render(request, 'id.html', context)
+    pet_obj = Pet.objects.get(id=pet_id)
+    customer_id = pet_obj.customer_id
+    customer_obj = Customer.objects.get(id=customer_id)
+    sibling_pets = Pet.objects.filter(customer_id=customer_id).exclude(id=pet_obj.id)
+    order_obj = Order.objects.filter(customer_id=customer_obj)
+    context = {'pet': pet_obj,
+               'heading': 'Pet: ' + Pet.objects.get(id=pet_id).name,
+               'pet_heading': 'Pet',
+               'customer_heading': 'Owner',
+               'customer': customer_obj,
+               'sibling_heading': 'Sibling Animals',
+               'siblings': sibling_pets,
+               'order_heading': 'Orders',
+               'orders': order_obj,}
+    return render(request, 'get_pet.html', context)
 
 
 @login_required(login_url='/login/')
@@ -124,9 +144,10 @@ def get_services(request):
 
 @login_required(login_url='/login/')
 def get_service(request, service_id=1):
-    context = {'id': Service.objects.get(id=service_id), 'url': 'service',
-               'heading': 'Service: ' + Service.objects.get(id=service_id).name, }
-    return render(request, 'id.html', context)
+    context = {'service': Service.objects.get(id=service_id),
+               'heading': 'Service: ' + Service.objects.get(id=service_id).name,
+               'service_heading': 'Service', }
+    return render(request, 'get_service.html', context)
 
 
 @login_required(login_url='/login/')

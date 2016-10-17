@@ -4,10 +4,9 @@
 
 {% block page %}
     <table>
-        {% for id in ids %}
+        <h3>{{ order_heading }}</h3>
         <p>
-        <a href="/pet_sitting/{{ url }}/get/{{ id.id }}/">{{ id }}</a>
+            <a href="/pet_sitting/order/edit/{{ order.id }}/">{{ order }}</a>
         </p>
-        {% endfor %}
     </table>
 {% endblock %}

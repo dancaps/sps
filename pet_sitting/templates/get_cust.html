@@ -1,0 +1,30 @@
+{% extends "menu_sidebar.html" %}
+
+{% block page_heading %}<h1 class="page-header">{{ heading }}</h1>{% endblock %}
+
+{% block page %}
+    <table>
+        <h3>{{ customer_heading }}</h3>
+        <p>
+            <a href="/pet_sitting/customer/edit/{{ customer.id }}/">{{ customer }}</a>
+        </p>
+    </table>
+
+    <table>
+        <h3>{{ pet_heading }}</h3>
+        {% for pet in pets %}
+        <p>
+            <a href="/pet_sitting/pet/edit/{{ pet.id }}/">{{ pet }}</a>
+        </p>
+        {% endfor %}
+    </table>
+
+    <table>
+        <h3>{{ order_heading }}</h3>
+        {% for order in orders %}
+        <p>
+            <a href="/pet_sitting/order/edit/{{ order.id }}/">{{ order }}</a>
+        </p>
+        {% endfor %}
+    </table>
+{% endblock %}

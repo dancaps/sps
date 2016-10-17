@@ -4,8 +4,9 @@
 
 {% block page %}
     <table>
+        <h3>{{ service_heading }}</h3>
         <p>
-            <a href="/pet_sitting/{{ url }}/edit/{{ id.id }}/">{{ id }}</a>
+            <a href="/pet_sitting/service/edit/{{ service.id }}/">{{ service }}</a>
         </p>
     </table>
 {% endblock %}
