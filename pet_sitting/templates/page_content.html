@@ -3,8 +3,23 @@
 {% block page_heading %}<h1 class="page-header"><h1>{{ heading }}</h1>{% endblock %}
 
 {% block page %}
+    <br>
     <h3>{{ message }}</h3>
+    <br>
+
     <table>
-        {{ results }}
+
+        {% for customer in customer_results %}
+            <p>
+            <a href="/pet_sitting/customer/get/{{ customer.id }}/">{{ customer }}</a>
+            </p>
+        {% endfor %}
+
+        {% for pet in pet_results %}
+            <p>
+            <a href="/pet_sitting/pet/get/{{ pet.id }}/">{{ pet }}</a>
+            </p>
+        {% endfor %}
+
     </table>
 {% endblock %}

@@ -154,9 +154,16 @@ def add_service(request, service_id=None):
 @login_required(login_url='/login/')
 def search_results(request):
     search_query = request.POST.get('search_query', '')
-    context = {'message': None, 'heading': 'Search Results: ' + search_query, 'results': None}
+    context = {'message': None, 'heading': 'Search Results: ' + search_query, 'customer_results': None,
+               'pet_results': None, 'order_results': None}
     if len(search_query) == 0:
         context['message'] = 'There were 0 results returned'
         return render(request, 'page_content.html', context)
-    data_fields = Customer.objects.filter()
+    customer_result = Customer.customer_search(search_query)
+    pet_result = Pet.pet_search(search_query)
+    #order_result = Order.order_search(search_query)
+    context['customer_results'] = customer_result
+    context['pet_results'] = pet_result
+    #context['order_results'] = order_result
+    context['message'] = 'There were ' + str(len(customer_result) + len(pet_result)) + ' results returned'
     return  render(request, 'page_content.html', context)

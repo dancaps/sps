@@ -56,12 +56,11 @@ class Customer(models.Model):
                     kwargs.update({k + '__icontains': search_query})
                 else:
                     continue
-        print(kwargs)
+
         for k, v in kwargs.items():
             args = {k: v}
             db_query = Customer.objects.filter(**args)
-            if len(db_query) > 1:
-                customers += list(db_query)
+            customers += list(db_query)
 
         return list(set(customers))
 
@@ -74,6 +73,25 @@ class Pet(models.Model):
     def __str__(self):
         return 'Owner: {} {} - Pet Name: {} - Animal: {}'.format(self.customer.first_name, self.customer.last_name,
                                                                  self.name, self.animal_type)
+
+    @staticmethod
+    def pet_search(search_query):
+        pets = []
+        kwargs = {}
+        if type(search_query) == int:
+            return pets
+
+        fields = {'name': 'string', 'animal_type': 'string'}
+
+        for k, v in fields.items():
+            kwargs.update({k + '__icontains': search_query})
+
+        for k, v in kwargs.items():
+            args = {k: v}
+            db_query = Pet.objects.filter(**args)
+            pets += list(db_query)
+
+        return list(set(pets))
 
 class Service(models.Model):
     name = models.CharField(max_length=200)
