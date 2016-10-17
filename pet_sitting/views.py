@@ -8,7 +8,7 @@ from pet_sitting.forms import CustomerForm, PetForm, OrderForm, ServiceForm
 
 @login_required(login_url='/login/')
 def dashboard(request):
-    return render(request, 'menu_sidebar.html')
+    return render(request, 'dashboard.html')
 
 
 @login_required(login_url='/login/')

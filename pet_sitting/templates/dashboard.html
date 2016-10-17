@@ -1,0 +1,60 @@
+{% extends "menu_sidebar.html" %}
+
+{% block page_heading %}<h1 class="page-header">Dashboard</h1>{% endblock %}
+{% block page %}
+
+    {% block image_area %}
+{% comment %}
+    <div class="row placeholders">
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Label</h4>
+        <span class="text-muted">Something else</span>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Label</h4>
+        <span class="text-muted">Something else</span>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Label</h4>
+        <span class="text-muted">Something else</span>
+      </div>
+      <div class="col-xs-6 col-sm-3 placeholder">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        <h4>Label</h4>
+        <span class="text-muted">Something else</span>
+      </div>
+    </div>
+{% endcomment %}
+    {% endblock %}
+
+    {% block table_area %}
+    <h2 class="sub-header">Active Orders</h2>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Customer</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th># of Visits</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+          <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer.full_name }}</td>
+            <td>{{ order.start_date }}</td>
+            <td>{{ order.end_date }}</td>
+            <td>{{ order.total_visits }}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endblock %}
+{% endblock %}
