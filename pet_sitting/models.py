@@ -108,7 +108,7 @@ class Order(models.Model):
     total_visits = models.IntegerField(null=True)
     total_mileage = models.IntegerField(null=True, blank=True) #can I populate this with customer mileage * num_visits
     amount_due = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) #can I populate this services.price
-    pets = models.ManyToManyField(Pet) #I only want the customers pets to show up.
+    #pets = models.ManyToManyField(Pet) #I only want the customers pets to show up.
     services = models.ForeignKey(Service, null=True)
     paid = models.BooleanField(default=False)
 

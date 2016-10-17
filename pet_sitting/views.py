@@ -13,8 +13,12 @@ def dashboard(request):
 
 @login_required(login_url='/login/')
 def get_customers(request):
-    return render(request, 'all_ids.html', {'ids': Customer.objects.all(), 'url': 'customer',
-                                            'heading': 'View All Customers', })
+    ids = Customer.objects.order_by('id')
+    ids = ids.reverse()
+    context = {'ids': ids,
+               'url': 'customer',
+               'heading': 'View All Customers', }
+    return render(request, 'all_ids.html', context)
 
 
 @login_required(login_url='/login/')
@@ -56,8 +60,12 @@ def add_customer(request, customer_id=None):
 
 @login_required(login_url='/login/')
 def get_orders(request):
-    return render(request, 'all_ids.html', {'ids': Order.objects.all(), 'url': 'order',
-                                            'heading': 'View All Orders', })
+    ids = Order.objects.order_by('id')
+    ids = ids.reverse()
+    context = {'ids': ids,
+               'url': 'order',
+               'heading': 'View All Orders', }
+    return render(request, 'all_ids.html', context)
 
 
 @login_required(login_url='/login/')
@@ -93,7 +101,12 @@ def add_order(request, order_id=None):
 
 @login_required(login_url='/login/')
 def get_pets(request):
-    return render(request, 'all_ids.html', {'ids': Pet.objects.all(), 'url': 'pet', 'heading': 'All Pets', })
+    ids = Pet.objects.order_by('id')
+    ids = ids.reverse()
+    context = {'ids': ids,
+               'url': 'pet',
+               'heading': 'All Pets', }
+    return render(request, 'all_ids.html', context)
 
 
 @login_required(login_url='/login/')
@@ -139,7 +152,12 @@ def add_pet(request, pet_id=None):
 
 @login_required(login_url='/login/')
 def get_services(request):
-    return render(request, 'all_ids.html', {'ids': Service.objects.all(), 'url': 'service', 'heading': 'All Services', })
+    ids = Service.objects.order_by('id')
+    ids = ids.reverse()
+    context = {'ids': ids,
+               'url': 'service',
+               'heading': 'All Services', }
+    return render(request, 'all_ids.html', context)
 
 
 @login_required(login_url='/login/')

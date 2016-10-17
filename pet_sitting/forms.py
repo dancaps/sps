@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 from pet_sitting.models import Customer, Pet, Service, Order
 
@@ -15,10 +16,11 @@ class PetForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
-    pets = forms.ModelMultipleChoiceField(queryset=Pet.objects.all(), widget=forms.CheckboxSelectMultiple())
+    start_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget)
+    end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget)
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['customer', 'start_date', 'end_date', 'total_visits', 'amount_due', 'services', 'paid']
 
 
 class ServiceForm(forms.ModelForm):
