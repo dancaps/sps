@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,14 @@ from pet_sitting.forms import CustomerForm, PetForm, OrderForm, ServiceForm
 
 @login_required(login_url='/login/')
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    active_orders = Order.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
+    active_orders = active_orders.order_by('end_date')
+    unpaid_orders = Order.objects.filter(paid=False)
+    upcoming_orders = Order.objects.filter(start_date__gt=datetime.date.today())
+    context = {'active_orders': active_orders,
+               'unpaid_orders': unpaid_orders,
+               'upcoming_orders': upcoming_orders}
+    return render(request, 'dashboard.html', context)
 
 
 @login_required(login_url='/login/')
@@ -47,7 +55,7 @@ def add_customer(request, customer_id=None):
             customer_form = CustomerForm(request.POST)
         if customer_form.is_valid(): # validate the POST and save the data
             customer_form.save()
-            return HttpResponseRedirect('/pet_sitting/customer/all/')
+            return HttpResponseRedirect('/pet_sitting/dashboard/')
     elif customer_id == None: # GET first time code
         customer_form = CustomerForm()
     else: # GET entry that already exists: EDIT VIEW
@@ -88,7 +96,7 @@ def add_order(request, order_id=None):
             order_form = OrderForm(request.POST)
         if order_form.is_valid(): # validate the POST and save the data
             order_form.save()
-            return HttpResponseRedirect('/pet_sitting/order/all/')
+            return HttpResponseRedirect('/pet_sitting/dashboard/')
     elif order_id == None: # GET first time code
         order_form = OrderForm()
     else: # GET entry that already exists: EDIT VIEW
@@ -139,7 +147,7 @@ def add_pet(request, pet_id=None):
             pet_form = PetForm(request.POST)
         if pet_form.is_valid(): # validate the POST and save the data
             pet_form.save()
-            return HttpResponseRedirect('/pet_sitting/pet/all/')
+            return HttpResponseRedirect('/pet_sitting/dashboard/')
     elif pet_id == None: # GET first time code
         pet_form = PetForm()
     else: # GET entry that already exists: EDIT VIEW
@@ -179,7 +187,7 @@ def add_service(request, service_id=None):
             service_form = ServiceForm(request.POST)
         if service_form.is_valid(): # validate the POST and save the data
             service_form.save()
-            return HttpResponseRedirect('/pet_sitting/service/all/')
+            return HttpResponseRedirect('/pet_sitting/dashboard/')
     elif service_id == None: # GET first time code
             service_form = ServiceForm()
     else: # GET entry that already exists: EDIT VIEW

@@ -31,7 +31,7 @@
     {% endblock %}
 
     {% block table_area %}
-    <h2 class="sub-header">Active Orders</h2>
+    <h3 class="sub-header">Active Jobs</h3>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -44,10 +44,64 @@
           </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
+            {% for order in active_orders %}
           <tr>
-            <td>{{ order.id }}</td>
-            <td>{{ order.customer.full_name }}</td>
+            <td><a href="/pet_sitting/order/edit/{{ order.id }}/">{{ order.id }}</a></td>
+            <td><a href="/pet_sitting/customer/get/{{ order.customer_id }}/">{{ order.customer.full_name }}</a></td>
+            <td>{{ order.start_date }}</td>
+            <td>{{ order.end_date }}</td>
+            <td>{{ order.total_visits }}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">Outstanding Payments</h3>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Customer</th>
+            <th>Amount Due</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th># of Visits</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in unpaid_orders %}
+          <tr>
+            <td><a href="/pet_sitting/order/edit/{{ order.id }}/">{{ order.id }}</a></td>
+            <td><a href="/pet_sitting/customer/get/{{ order.customer_id }}/">{{ order.customer.full_name }}</a></td>
+            <td>{{ order.amount_due }}</td>
+            <td>{{ order.start_date }}</td>
+            <td>{{ order.end_date }}</td>
+            <td>{{ order.total_visits }}</td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-header">Upcoming Jobs</h3>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Customer</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th># of Visits</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in upcoming_orders %}
+          <tr>
+            <td><a href="/pet_sitting/order/edit/{{ order.id }}/">{{ order.id }}</a></td>
+            <td><a href="/pet_sitting/customer/get/{{ order.customer_id }}/">{{ order.customer.full_name }}</a></td>
             <td>{{ order.start_date }}</td>
             <td>{{ order.end_date }}</td>
             <td>{{ order.total_visits }}</td>
