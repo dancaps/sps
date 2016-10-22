@@ -1,5 +1,10 @@
 from pet_sitting.models import *
 
+"""
+These are quick and dirty custom scripts that performed functions
+during developement. This is ugly stuff.
+"""
+
 def populate_db(cust=3):
     count = 0
     while count < cust:

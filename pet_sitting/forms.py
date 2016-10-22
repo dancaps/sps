@@ -16,11 +16,19 @@ class PetForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
-    start_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget)
-    end_date = forms.DateField(initial=datetime.date.today, widget=forms.SelectDateWidget)
+    start_date = forms.DateField(initial=datetime.date.today,
+                                 widget=forms.SelectDateWidget)
+    end_date = forms.DateField(initial=datetime.date.today,
+                               widget=forms.SelectDateWidget)
     class Meta:
         model = Order
-        fields = ['customer', 'start_date', 'end_date', 'total_visits', 'amount_due', 'services', 'paid']
+        fields = ['customer',
+                  'start_date',
+                  'end_date',
+                  'total_visits',
+                  'amount_due',
+                  'services',
+                  'paid', ]
 
 
 class ServiceForm(forms.ModelForm):

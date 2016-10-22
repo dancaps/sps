@@ -7,8 +7,9 @@ from localflavor.us.models import PhoneNumberField, USStateField, \
 class Customer(models.Model):
     """
     This class is the customer database table. It contains a function
-    that allows searching of filled.
+    that allows searching of fields.
     """
+
     signup_date = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
@@ -35,6 +36,7 @@ class Customer(models.Model):
         """
         This is the text that is returned with the object
         """
+
         return '{} {}, {}, {}'.format(self.first_name,
                                       self.last_name,
                                       self.primary_phone,
@@ -45,6 +47,7 @@ class Customer(models.Model):
         """
         :return: Custom property with the full name.
         """
+
         return '{} {}'.format(self.first_name,
                               self.last_name)
 
@@ -112,11 +115,20 @@ class Customer(models.Model):
 
 
 class Pet(models.Model):
+    """
+    This class is the pet database table. It contains a function
+    that allows searching of fields.
+    """
+
     name = models.CharField(max_length=200)
     customer = models.ForeignKey(Customer)
     animal_type = models.CharField(max_length=200)
 
     def __str__(self):
+        """
+        This is the text that is returned with the object
+        """
+
         return 'Owner: {} {} - ' \
                'Pet Name: {} - ' \
                'Animal: {}'.format(self.customer.first_name,
@@ -126,17 +138,32 @@ class Pet(models.Model):
 
     @staticmethod
     def pet_search(search_query):
+        """
+        Searches the database fields for the search query provided.
+
+        :param search_query: str/int: This param is created by
+        request.POST and sent through views.py
+        :return: Returns a list of objects that contains the search
+        query in any of its fields.
+        """
+
         pets = []
         kwargs = {}
 
         if type(search_query) == int:
             return pets
 
+        # Manually created dict to define the field type. Either integer
+        # or string. Any new fields that need to be included in the
+        # search are required to be in this dict.
         fields = {'name': 'string', 'animal_type': 'string'}
 
+        # Builds the dict with the fields of the same data type
         for k, v in fields.items():
             kwargs.update({k + '__icontains': search_query})
 
+        # Takes the key:value pair, filters the fields and applies
+        # any results to a list of objects.
         for k, v in kwargs.items():
             args = {k: v}
             db_query = Pet.objects.filter(**args)
@@ -146,15 +173,27 @@ class Pet(models.Model):
 
 
 class Service(models.Model):
+    """
+    This class is the service database table. These are the services offered.
+    """
+
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
+        """
+        This is the text that is returned with the object
+        """
         return 'Service: {} - Price: ${}'.format(self.name,
                                                  self.price)
 
 
 class Order(models.Model):
+    """
+    This class is the order database table. All the order information
+    will be stored here.
+    """
+
     order_date = models.DateTimeField(auto_now_add=True)
     customer = models.ForeignKey(Customer)
     start_date = models.DateField(auto_now=False)
@@ -169,6 +208,9 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
 
     def __str__(self):
+        """
+        This is the text that is returned with the object
+        """
         return 'Order Number: {}, ' \
                'Customer: {} {}, ' \
                'Start Date: {}, ' \
