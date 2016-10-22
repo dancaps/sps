@@ -13,7 +13,7 @@
     <table>
         <h3>{{ customer_heading }}</h3>
         <p>
-            <a href="/pet_sitting/customer/edit/{{ customer.id }}/">{{ customer }}</a>
+            <a href="/pet_sitting/customer/get/{{ customer.id }}/">{{ customer }}</a>
         </p>
     </table>
 
@@ -21,7 +21,7 @@
         <h3>{{ sibling_heading }}</h3>
         {% for sibling in siblings %}
         <p>
-            <a href="/pet_sitting/pet/edit/{{ sibling.id }}/">{{ sibling }}</a>
+            <a href="/pet_sitting/pet/get/{{ sibling.id }}/">{{ sibling }}</a>
         </p>
         {% endfor %}
     </table>

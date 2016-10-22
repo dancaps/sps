@@ -9,7 +9,8 @@ from pet_sitting.forms import CustomerForm, PetForm, OrderForm, ServiceForm
 
 @login_required(login_url='/login/')
 def dashboard(request):
-    active_orders = Order.objects.filter(start_date__lte=datetime.date.today()).filter(end_date__gte=datetime.date.today())
+    active_orders = Order.objects.filter(start_date__lte=datetime.date.today())\
+        .filter(end_date__gte=datetime.date.today())
     active_orders = active_orders.order_by('end_date')
     unpaid_orders = Order.objects.filter(paid=False)
     upcoming_orders = Order.objects.filter(start_date__gt=datetime.date.today())
