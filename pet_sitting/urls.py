@@ -4,7 +4,6 @@ from pet_sitting.views import dashboard, add_customer, add_pet, get_customers, \
      search_results
 
 urlpatterns = [
-    #url(r'^$', login),
     url(r'^dashboard/$', dashboard),
     url(r'^add_customer/$', add_customer),
     url(r'^customer/all/$', get_customers),
