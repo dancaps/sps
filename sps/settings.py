@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gv=)&*ja440hq=v8=z0s0vvby_yin&wng7##^zy!d0m&es80$n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1:8000',]
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -125,5 +125,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'pet_sitting', 'static'),
+]
 
 LOGIN_REDIRECT_URL = '/pet_sitting/dashboard/'
