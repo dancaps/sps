@@ -41,22 +41,22 @@ To install Django in the new virtual environment, run the following command::
 Cloning your project
 =====================
 
-To create a new Django project called '**icecream**' using
-django-twoscoops-project, run the following command::
+Once you virtualenv is created and django is installed you can clone the code
+to you virtualenv::
 
     $ git clone https://github.com/dancaps/sps.git
 
 Installation of Dependencies
 =============================
 
-Depending on where you are installing dependencies:
-
-In development::
+Make sure you have your virtualenv activated::
 
     $ pip install -r sps/requirements.txt
-
 
 Demo
 ================
 
 http://www.dancaps.xyz/
+
+username: demo
+password: p@ssw0rd123
