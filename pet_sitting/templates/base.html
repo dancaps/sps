@@ -58,9 +58,11 @@
             <li>{% block help %}<a href="#">Help</a>{% endblock %}</li>
             <li>{% block profile %}<a href="#">Profile</a>{% endblock %}</li>
           </ul>
+	  {% block search  %}
           <form class="navbar-form navbar-right">
-            {% block search %}<input type="text" class="form-control" placeholder="Search...">{% endblock %}
+            <input type="text" class="form-control" placeholder="Search...">
           </form>
+	  {% endblock  %}
         </div>
       </div>
     </nav>
