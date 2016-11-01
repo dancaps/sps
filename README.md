@@ -56,7 +56,7 @@ Make sure you have your virtualenv activated::
 Demo
 ================
 
-http://www.dancaps.xyz/
+http://www.sps.dancaps.xyz/
 
 username: demo
 password: p@ssw0rd123
