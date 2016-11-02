@@ -42,7 +42,7 @@ Virtualenv was installed in the previous step. Now you can create your virtualen
 Installation of Dependencies
 =============================
 
-Make sure you have your virtualenv activated, whch::
+Make sure you have your virtualenv activated and install the required packages::
 
     $ pip install -r sps/requirements.txt
 
