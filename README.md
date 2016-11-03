@@ -29,7 +29,7 @@ Installing the Server
 To install all the necessary Ubuntu packages, run the following commands::
 
     $  sudo apt-get update
-    $  sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib nginx python3-dev
+    $  sudo apt-get install -y python-pip python-dev libpq-dev postgresql postgresql-contrib nginx python3-dev git
 
 Create your Virtualenv
 ======================
