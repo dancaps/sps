@@ -23,20 +23,28 @@ Working Environment
 
 I recommend running this in a virtualenv on Linux
 
-Virtualenv Only
----------------
+Installing the Server
+=====================
 
-First, make sure you are using virtualenv (http://www.virtualenv.org). Once
-that's installed, create your virtualenv::
+To install all the necessary Ubuntu packages, run the following commands::
+
+    $  sudo apt-get update
+    $  sudo apt-get install -y python-pip python-dev libpq-dev postgresql postgresql-contrib nginx python3-dev git
+
+Create your Virtualenv
+======================
+
+Virtualenv was installed in the previous step. Now you can create your virtualenv::
 
     $ virtualenv sps
+    $ source sps/bin/activate
 
-Installing Django
-=================
+Installation of Dependencies
+=============================
 
-To install Django in the new virtual environment, run the following command::
+Make sure you have your virtualenv activated and install the required packages::
 
-    $ pip install django==1.10.1
+    $ pip install -r sps/requirements.txt
 
 Cloning your project
 =====================
@@ -45,13 +53,6 @@ Once you virtualenv is created and django is installed you can clone the code
 to you virtualenv::
 
     $ git clone https://github.com/dancaps/sps.git
-
-Installation of Dependencies
-=============================
-
-Make sure you have your virtualenv activated::
-
-    $ pip install -r sps/requirements.txt
 
 Demo
 ================
