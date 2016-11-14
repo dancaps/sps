@@ -5,11 +5,10 @@
 {% block projectname %}<a class="navbar-brand" href="/pet_sitting/dashboard/">Superior Pet Services Operational Portal</a>{% endblock %}
 
 {% block search %}
-    <form class="navbar-form navbar-right" method="post" formaction="/pet_sitting/search_results/">
+    <form class="navbar-form navbar-right" method="post" action="/pet_sitting/search_results/">
     {% csrf_token %}
-    <input type="text"
-           class="form-control" placeholder="Search..." name="search_query" value="{{ source.search_query }}">
-    </form>>
+    <input type="text" class="form-control" placeholder="Search..." name="search_query" value="{{ source.search_query }}">
+    </form>
 {% endblock %}
 
 {% block dashboard %}<a href="/pet_sitting/dashboard/">Dashboard</a>{% endblock %}
